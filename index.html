@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GeoCampo - Protótipo</title>
+<style>
+*{box-sizing:border-box} body{margin:0;font-family:Arial,sans-serif;background:#f5f3f8;color:#292333}
+.app{max-width:430px;margin:auto;min-height:100vh;background:#fff;position:relative;padding-bottom:76px}
+header{background:#6b35a8;color:#fff;padding:22px 20px 20px;border-radius:0 0 22px 22px}
+.logo{font-size:25px;font-weight:800}.sub{opacity:.85;font-size:13px;margin-top:4px}
+.content{padding:20px}.title{font-size:22px;font-weight:750;margin:5px 0 6px}.muted{color:#777;font-size:14px}
+.card{border:1px solid #e7e2ec;border-radius:16px;padding:16px;margin:14px 0;background:#fff;box-shadow:0 4px 15px #00000009}
+.card h3{margin:0 0 7px;font-size:17px}.card p{margin:0;color:#666;font-size:13px;line-height:1.45}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:18px}
+.module{padding:16px;border-radius:16px;background:#f3edf9;border:1px solid #e4d8ef;cursor:pointer}
+.icon{font-size:27px}.module b{display:block;margin-top:9px}.module span{font-size:12px;color:#777}
+button{border:0;border-radius:12px;padding:13px 16px;background:#6b35a8;color:white;font-weight:700;cursor:pointer;width:100%;margin-top:12px}
+.secondary{background:#eee8f3;color:#56317d}
+.map{height:245px;border-radius:18px;background:
+linear-gradient(30deg,transparent 47%,#ffffffaa 48%,#ffffffaa 50%,transparent 51%),
+linear-gradient(150deg,transparent 47%,#ffffffaa 48%,#ffffffaa 50%,transparent 51%),#9bc47a;
+position:relative;overflow:hidden;border:1px solid #ddd}
+.map:after{content:"";position:absolute;inset:20px 35px 45px 25px;border:3px solid #6b35a8;border-radius:35% 50% 40% 55%;background:#ffffff20}
+.marker{position:absolute;left:48%;top:43%;font-size:28px}.legend{display:flex;gap:12px;font-size:11px;margin-top:9px}
+.dot{width:11px;height:11px;border-radius:50%;display:inline-block;margin-right:4px}
+.stat{display:flex;justify-content:space-between;padding:11px 0;border-bottom:1px solid #eee;font-size:14px}.stat:last-child{border:0}
+.badge{display:inline-block;padding:5px 9px;border-radius:20px;background:#eee5f7;color:#60308b;font-size:11px;font-weight:bold}
+.bottom{position:fixed;bottom:0;left:50%;transform:translateX(-50%);max-width:430px;width:100%;background:#fff;border-top:1px solid #eee;display:flex;justify-content:space-around;padding:10px 4px;z-index:5}
+.bottom button{background:none;color:#777;margin:0;padding:4px;font-size:11px;width:auto}.bottom button.active{color:#6b35a8}
+.screen{display:none}.screen.active{display:block}
+input,select{width:100%;padding:13px;border:1px solid #ddd;border-radius:11px;margin-top:7px;font-size:14px}
+.back{background:none;color:#6b35a8;padding:0;width:auto;margin:0 0 12px}
+</style>
+</head>
+<body>
+<div class="app">
+<header><div class="logo">🌱 GeoCampo</div><div class="sub">Geoprocessamento simples para a agricultura</div></header>
+
+<section id="home" class="screen active">
+<div class="content">
+<div class="title">Olá! 👋</div><div class="muted">Acompanhe sua propriedade em um só lugar.</div>
+<div class="card"><span class="badge">PROPRIEDADE</span><h3 style="margin-top:10px">Fazenda Modelo</h3><p>Área cadastrada: 45 hectares</p><button onclick="show('monitor')">Ver propriedade</button></div>
+<div class="title" style="font-size:18px;margin-top:24px">Módulos</div>
+<div class="grid">
+<div class="module" onclick="show('monitor')"><div class="icon">🛰️</div><b>Monitoramento</b><span>NDVI e lavoura</span></div>
+<div class="module" onclick="show('manejo')"><div class="icon">🌱</div><b>Zonas de manejo</b><span>Áreas do talhão</span></div>
+<div class="module" onclick="show('ambiental')"><div class="icon">🌳</div><b>Ambiental</b><span>APP e Reserva Legal</span></div>
+<div class="module" onclick="show('relatorio')"><div class="icon">📊</div><b>Relatório</b><span>Resumo da propriedade</span></div>
+</div>
+</div></section>
+
+<section id="monitor" class="screen"><div class="content">
+<button class="back" onclick="show('home')">← Voltar</button><div class="title">Monitoramento</div><div class="muted">Visualização da lavoura por imagem de satélite.</div>
+<div class="card"><div class="map"><div class="marker">📍</div></div><div class="legend"><span><i class="dot" style="background:#4c9f38"></i>Vegetação</span><span><i class="dot" style="background:#e6b84a"></i>Atenção</span><span><i class="dot" style="background:#c95b5b"></i>Baixo vigor</span></div></div>
+<div class="card"><h3>Índice NDVI</h3><p>Exemplo de visualização do vigor da vegetação. Em uma versão completa, os dados seriam obtidos de imagens de satélite.</p><div class="stat"><span>Área monitorada</span><b>42 ha</b></div><div class="stat"><span>Área em atenção</span><b>3 ha</b></div></div>
+<button onclick="show('home')">Voltar ao início</button>
+</div></section>
+
+<section id="manejo" class="screen"><div class="content">
+<button class="back" onclick="show('home')">← Voltar</button><div class="title">Zonas de manejo</div><div class="muted">Organização do talhão conforme suas características.</div>
+<div class="card"><div class="map"><div style="position:absolute;inset:30px;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:3px"><div style="background:#d9e8a8"></div><div style="background:#c7d98b"></div><div style="background:#e8c77c"></div><div style="background:#b9d47c"></div></div></div></div>
+<div class="card"><div class="stat"><span>Zona 1</span><b>Baixa necessidade</b></div><div class="stat"><span>Zona 2</span><b>Necessidade média</b></div><div class="stat"><span>Zona 3</span><b>Maior necessidade</b></div></div>
+<p class="muted">As zonas são uma representação do conceito proposto no trabalho.</p>
+</div></section>
+
+<section id="ambiental" class="screen"><div class="content">
+<button class="back" onclick="show('home')">← Voltar</button><div class="title">Adequação ambiental</div><div class="muted">Informações ambientais da propriedade.</div>
+<div class="card"><h3>Áreas da propriedade</h3><div class="stat"><span>Área total</span><b>45 ha</b></div><div class="stat"><span>APP</span><b>4,2 ha</b></div><div class="stat"><span>Reserva Legal</span><b>9,0 ha</b></div></div>
+<div class="card"><span class="badge">STATUS</span><h3 style="margin-top:10px">Análise para consulta</h3><p>Em uma versão completa, o sistema cruzaria os dados da propriedade com as informações ambientais disponíveis.</p></div>
+</div></section>
+
+<section id="relatorio" class="screen"><div class="content">
+<button class="back" onclick="show('home')">← Voltar</button><div class="title">Relatório</div><div class="muted">Resumo da propriedade.</div>
+<div class="card"><h3>Fazenda Modelo</h3><div class="stat"><span>Área</span><b>45 ha</b></div><div class="stat"><span>Monitoramento</span><b>42 ha</b></div><div class="stat"><span>Áreas em atenção</span><b>3 ha</b></div><div class="stat"><span>Zonas de manejo</span><b>3</b></div></div>
+<button onclick="alert('No futuro, este botão poderá gerar um PDF.')">Gerar relatório</button>
+</div></section>
+
+<div class="bottom">
+<button class="active" onclick="show('home')">⌂<br>Início</button>
+<button onclick="show('monitor')">🛰️<br>Lavoura</button>
+<button onclick="show('manejo')">🌱<br>Manejo</button>
+<button onclick="show('ambiental')">🌳<br>Ambiental</button>
+</div>
+</div>
+<script>
+function show(id){
+ document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+ document.getElementById(id).classList.add('active');
+ window.scrollTo(0,0);
+ document.querySelectorAll('.bottom button').forEach(b=>b.classList.remove('active'));
+}
+</script>
+</body></html>
